@@ -8,4 +8,4 @@ set(CMAKE_C_FLAGS "-std=c99 -Wall")
 
 add_executable(game_text game_text.c)
 
-target_link_libraries(game_text gameOO-macos)
+target_link_libraries(game_text game00-macos)
