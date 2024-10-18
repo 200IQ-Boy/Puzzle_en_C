@@ -12,7 +12,7 @@ enable_testing()
 set(CMAKE_C_FLAGS "-std=c99 -Wall -g")
 
 add_executable(game_text game_text.c)
-target_link_libraries(game_text game)
+target_link_libraries(game_text game00-macos)
 
 add_executable(game_test_tyao game_test_tyao.c)
 add_test(test_tyao_dummy ./game_test_tyao dummy)
