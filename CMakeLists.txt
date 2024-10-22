@@ -1,7 +1,5 @@
 link_directories(${CMAKE_SOURCE_DIR})
 
-link_directories(${CMAKE_SOURCE_DIR})
-
 cmake_minimum_required(VERSION 3.3)
 
 project(game_text C)
@@ -17,5 +15,4 @@ add_executable(game_test_tyao game_test_tyao.c)
 target_link_libraries(game_text game00-macos)
 target_link_libraries(game_test_tyao game00-macos)
 
-add_executable(game_test_tyao game_test_tyao.c)
 add_test(test_tyao_dummy ./game_test_tyao dummy)

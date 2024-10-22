@@ -131,5 +131,26 @@ int main(int argc , char * argv[]) {
         fprintf(stderr,"usage: ./game_test_tyao dummy\n");
         return EXIT_FAILURE;
     }
+    if(!test_game_get_piece_shape()){
+        return EXIT_FAILURE;
+    }
+    if(!test_game_print()){
+        return EXIT_FAILURE;
+    }
+    if(!test_game_play_move()){
+        return EXIT_FAILURE;
+    }
+    if(!test_game_reset_orientation()){
+        return EXIT_FAILURE;
+    }
+    if(!test_game_won()){
+        return EXIT_FAILURE;
+    }
+    if(!test_game_shuffle_orientation()){
+        return EXIT_FAILURE;
+    }
+    if(!test_game_get_piece_orientation()){
+        return EXIT_FAILURE;
+    }
     return test_dummy();
 }
