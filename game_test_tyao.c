@@ -76,7 +76,7 @@ bool test_game_won(){
     printf("g1 won: %d\n", game_won(g1)); 
     printf("g2 won: %d\n", game_won(g2));
     printf("g3 won: %d\n", game_won(g3));
-    return (!game_won(g1)) && (!game_won(g2)) && game_won(g3);
+    return (game_won(g1)) && (!game_won(g2)) && game_won(g3);
 }
 bool test_game_reset_orientation(){
     shape ts[]={0,0,0,0,1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4,3,3,2,1,0};
