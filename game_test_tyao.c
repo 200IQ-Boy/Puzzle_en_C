@@ -142,7 +142,7 @@ int main(int argc , char * argv[]) {
         usage(argc, argv);
     fprintf(stderr, "=> Start test \"%s\"\n", argv[1]);
     bool ok = false;
-    if(strcmp("dummy",argv[1]))
+    if(strcmp("dummy",argv[1]) == 0)
         return test_dummy();
     else if(strcmp("test_game_get_piece_shape",argv[1]) == 0)
         ok = test_game_get_piece_shape();
@@ -156,7 +156,7 @@ int main(int argc , char * argv[]) {
         ok = test_game_reset_orientation();
     else if(strcmp("test_game_print",argv[1]) == 0)
         ok = test_game_print();
-    else if(strcmp("test_game_shuffle_orientationt",argv[1]) == 0)
+    else if(strcmp("test_game_shuffle_orientation",argv[1]) == 0)
         ok = test_game_shuffle_orientation();
     else
     {
