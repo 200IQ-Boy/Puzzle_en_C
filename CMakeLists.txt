@@ -17,7 +17,7 @@ add_executable(game_test_ddofonhakou game_test_ddofonhakou.c)
 target_link_libraries(game_text game00-macos)
 target_link_libraries(game_test_tyao game00-macos)
 target_link_libraries(game_test_ttarade game00-macos)
-target_link_libraries(game_test_ddofonhakou game00)
+target_link_libraries(game_test_ddofonhakou game00-macos)
 
 add_test(test_tyao_dummy ./game_test_tyao dummy)
 add_test(test_tyao_game_get_piece_shape ./game_test_tyao test_game_get_piece_shape )
