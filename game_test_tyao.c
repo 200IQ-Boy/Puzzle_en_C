@@ -15,13 +15,16 @@ bool test_game_get_piece_shape(){
         game_delete(g);
         return false;
     }
-    shape ts[]={0,1,2,3,4,0,0,0,0,2,0,0,3,0,0,0,0,0,1,0,3,3,2,1,0};
-    game g3=game_new(ts,NULL);
-    for(int i = 0;i<5;i++){
-        if(game_get_piece_shape(g3,0,i) != i){
-            game_delete(g);
-            game_delete(g3);
-            return false;
+    shape ts[]={0,0,0,0,0,1,1,1,1,1,2,2,2,2,2,3,3,3,3,3,4,4,4,4,4};
+    direction td[] = {0,1,2,3,1,1,3,2,1,2,3,2,3,2,2,1,2,3,2,1,2,2,3,2,0};
+    game g3=game_new(ts,td);
+    for(int i = 0;i < 5;i++){
+        for(int j = 0 ;j < 5;j++){
+            if(game_get_piece_shape(g3,i,j) != i){
+                game_delete(g);
+                game_delete(g3);
+                return false;
+            }
         }
     }
     game_delete(g);
@@ -35,14 +38,16 @@ bool test_game_get_piece_orientation(){
         game_delete(g);
         return false;
     }
-    shape ts[]={1,1,2,3,4,0,0,0,0,2,0,0,3,0,0,0,0,0,1,0,3,3,2,1,0};
-    direction td[] = {0, 1, 2, 3, 1, 1, 3, 2, 1, 2, 3, 2, 3, 2, 2, 1, 2, 3, 2, 1, 2, 2, 3, 2, 0};
+    shape ts[]={0,0,0,0,0,1,1,1,1,1,2,2,2,2,2,3,3,3,3,3,4,4,4,4,4};
+    direction td[] = {0,1,2,3,3,0,1,2,3,3,0,1,2,3,3,0,1,2,3,3,0,1,2,3,3};
     game g3=game_new(ts,td);
-    for(int i = 0;i<4;i++){
-        if(game_get_piece_orientation(g3,0,i) != i){
-            game_delete(g);
-            game_delete(g3);
-            return false;
+    for(int i = 0;i<5;i++){
+        for(int j = 0 ;j < 4;j++){
+            if(game_get_piece_orientation(g3,i,j) != j){
+                game_delete(g);
+                game_delete(g3);
+                return false;
+            }
         }
     }
     game_delete(g);
@@ -51,17 +56,21 @@ bool test_game_get_piece_orientation(){
 }
 bool test_game_play_move() {
     shape ts[]={0,1,2,3,4,0,0,0,0,2,0,0,3,0,0,0,0,0,1,0,3,3,2,1,0};
-    direction td[] = {0, 1, 2, 3, 1, 1, 3, 2, 1, 2, 3, 2, 3, 2, 2, 1, 2, 3, 2, 1, 2, 2, 3, 2, 0};
+    direction td[] = {0, 0, 0, 0, 0, 1, 3, 2, 1, 2, 3, 2, 3, 2, 2, 1, 2, 3, 2, 1, 2, 2, 3, 2, 0};
     game g=game_new(ts,td);
-    game_play_move(g,0,0,3);
-    if(game_get_piece_orientation(g,0,0) != 3){
-        game_delete(g);
-        return false;
-    }
-    game_play_move(g,0,0,-3);
-    if(game_get_piece_orientation(g,0,0) != 0){
-        game_delete(g);
-        return false;
+    for(int i = 0;i<4;i++){
+        for(int j = 0;j<5;j++){
+            game_play_move(g,0,j,i);
+            if(game_get_piece_orientation(g,0,j) != i){
+                game_delete(g);
+                return false;
+            }
+            game_play_move(g,0,j,-i);
+            if(game_get_piece_orientation(g,0,j) != 0){
+                game_delete(g);
+                return false;
+            }
+        }
     }
     game_play_move(g,0,0,-5);
     if(game_get_piece_orientation(g,0,0) != 3){
@@ -87,13 +96,49 @@ bool test_game_reset_orientation(){
     shape ts[]={0,0,0,0,1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4,3,3,2,1,0};
     direction td[] = {0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 2, 2, 3, 2, 0};
     game g=game_new(ts,td);
+    game g1 = game_default();
+    game g2 = game_default_solution();
+    game g3 = game_new_empty();
     game_reset_orientation(g);
+    game_reset_orientation(g1);
+    game_reset_orientation(g2);
+    game_reset_orientation(g3);
     for(int i = 0;i<5;i++){
-        if(game_get_piece_orientation(g,0,i) != 0){
-            return false;
+        for(int j = 0;j<5;j++){
+            if(game_get_piece_orientation(g1,i,j) != 0){
+                game_delete(g);
+                game_delete(g1);
+                game_delete(g2);
+                game_delete(g3);
+                return false;
+            }
+            if(game_get_piece_orientation(g2,i,j) != 0){
+                game_delete(g);
+                game_delete(g1);
+                game_delete(g2);
+                game_delete(g3);
+                return false;
+            }
+            if(game_get_piece_orientation(g3,i,j) != 0){
+                game_delete(g);
+                game_delete(g1);
+                game_delete(g2);
+                game_delete(g3);
+                return false;
+            }
+            if(game_get_piece_orientation(g,i,j) != 0){
+                game_delete(g);
+                game_delete(g1);
+                game_delete(g2);
+                game_delete(g3);
+                return false;
+            }
         }
     }
     game_delete(g);
+    game_delete(g1);
+    game_delete(g2);
+    game_delete(g3);
     return true;
 }
 bool test_game_print(){
@@ -115,6 +160,29 @@ bool test_game_shuffle_orientation(){
     direction td[] = {0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 2, 2, 3, 2, 0};
     game g=game_new(ts,td);
     game_shuffle_orientation(g);
+
+    direction dprec = game_get_piece_orientation(g, 0, 0);
+    bool all_same = true;
+    for (int i = 0; i < DEFAULT_SIZE; i++) {
+        for (int j = 0; j < DEFAULT_SIZE; j++) {
+            if (i == 0 && j == 0) {
+                continue;
+            }
+
+            if (game_get_piece_orientation(g, i, j) != dprec) {
+                all_same = false;
+                break;
+            } else {
+                dprec = game_get_piece_orientation(g, i, j);
+            }
+        }
+    }
+
+    if (all_same) {
+        game_delete(g);
+        return false;
+    }
+
     int ecart = game_get_piece_orientation(g,0,0) - td[0];
     for(int i = 0;i < 5; i++){
         for(int j = 0; j<5;j++){
@@ -134,7 +202,17 @@ bool test_game_shuffle_orientation(){
             }
         }
     }
+
+    game g1 = game_default();
+    game g2 = game_new_empty();
+    game g3 = game_default_solution();
+    game_shuffle_orientation(g1);
+    game_shuffle_orientation(g2);
+    game_shuffle_orientation(g3);
     game_delete(g);
+    game_delete(g1);
+    game_delete(g2);
+    game_delete(g3);
     return false;
 }
 
